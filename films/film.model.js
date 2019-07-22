@@ -3,16 +3,20 @@ const Schema = mongoose.Schema;
 
 const filmSchema = new Schema({
   name: {
-    type: String
+    type: String,
+    required: true
   },
   yearRelease: {
     type: Number,
+    required: true
   },
   encodingFormat: {
     type: String,
+    required: true
   },
   actorList: {
     type: [String],
+    required: true
   }
 });
 
