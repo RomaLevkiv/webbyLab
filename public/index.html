@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>List of films</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="div1" >
+        <h4>Add new film</h4>
+        <form name="filmForm" id="sendForm">
+            <input type="hidden" name="id" value="0" />
+            <div>
+                <label for="name">Title:</label>
+                <input class="form-control" name="name" />
+            </div>
+            <div>
+                <label for="yearRelease">Release:</label>
+                <input class="form-control" name="yearRelease" />
+            </div>
+            <div>
+                <label for="encodingFormat">Format:</label>
+                <input class="form-control" name="encodingFormat" />
+            </div>
+            <div>
+                <label for="actorList">Stars:</label>
+                <input class="form-control" name="actorList" />
+            </div>
+            <div class="panel-body">
+                <button type="submit" class="btn btn-sm btn-primary">Save</button>
+                <a id="reset" class="btn btn-sm btn-primary">Reset form</a>
+                <a id="getFilms" class="btn btn-sm btn-primary">Get all films</a>
+                <a id="resetTable" class="btn btn-sm btn-primary">Reset table</a>
+            </div>
+        </form>
+    </div>
+
+    <div id="div2" >
+        <h2>Search</h2>
+        <form name="searchForm">
+
+            <div class="form-group display" >
+                <label for="searchFilmName">Find film by Title:</label>
+                <input class="form-control" id="searchByName" name="searchByName" />
+            </div>
+            <div class="panel-body display">
+                <a id="findByName" class="btn btn-sm btn-primary">find</a>
+            </div>
+            <div class="form-group display" >
+                <label for="searchByStars">Find film by Stars:</label>
+                <input class="form-control" id="searchByStars" name="searchByStars" />
+            </div>
+            <div class="panel-body display" >
+                <a id="findByActor" class="btn btn-sm btn-primary">find</a>
+            </div>
+
+        </form>
+        <form action="/films/addFiles" method="post" enctype="multipart/form-data">
+            <input class="btn btn-sm btn-primary" type="file" name="avatar" />
+            <button class="btn btn-sm btn-primary" type="submit">Send to DB!</button>
+        </form>
+
+    </div>
+
+    <div>
+        <table class="table table-condensed table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Release</th>
+                    <th>Format</th>
+                    <th>Stars</th>
+                    <th>Control buttons</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="ajaxFunc.js"></script>
+    <script src="eventHandlers.js"></script>
+</body>
+
+</html>

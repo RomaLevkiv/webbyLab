@@ -1,0 +1,22 @@
+body{
+  background-color: aliceblue
+}
+
+#div1{
+  margin:15px;
+  margin-right:200px; 
+  width:30%; 
+  display: inline-block;
+}
+
+#div2{
+  margin:15px; 
+  max-width: 280px;
+  max-height: 285px; 
+  width:30%; 
+  display: inline-block;
+}
+
+.display{
+  display:inline-block
+}
