@@ -50,7 +50,9 @@ exports.getFilmSort = async (req, res) => {
 
 exports.getFilmByTitle = async (req, res) => {
   try {
-    const gotFilmByTitle = await Film.find({ name: req.params.title });
+    const gotFilmByTitle = await Film.find({
+      name: new RegExp(_escapeRegexpSpecialChars(req.params.title), "i") 
+    });
     res.status(200).send(gotFilmByTitle);
   } catch (err) {
     res.status(400).send({ message: err });
@@ -59,7 +61,11 @@ exports.getFilmByTitle = async (req, res) => {
 
 exports.getFilmsByActor = async (req, res) => {
   try {
-    const gotFilmByActor = await Film.find({ actorList: { $in: req.params.actor } });
+    const gotFilmByActor = await Film.find({
+      actorList: { 
+        $in: new RegExp(_escapeRegexpSpecialChars(req.params.actor), "i")
+      } 
+    });
     res.status(200).send(gotFilmByActor);
   } catch (err) {
     res.status(400).send({ message: err });
@@ -93,4 +99,8 @@ exports.readFileWriteDB = async (req, res) => {
   catch (e) {
     res.status(400).send("Sorry, data parsing error!");
   }
+}
+
+function _escapeRegexpSpecialChars(str) {
+  return str.replace(/[\.\^\$\*\+\(\)\[\{\\\|\?]/g, '\\$&');
 }

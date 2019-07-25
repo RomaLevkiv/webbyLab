@@ -25,7 +25,12 @@
             </div>
             <div>
                 <label for="encodingFormat">Format:</label>
-                <input class="form-control" name="encodingFormat" />
+                <select  id="select" class="form-control" name="encodingFormat">
+                    <option selected disabled value="default">choose format</option>
+                    <option value="VHS">VHS</option>
+                    <option value="DVD">DVD</option>
+                    <option value="Blue-Ray">Blue-Ray</option>
+                </select>
             </div>
             <div>
                 <label for="actorList">Stars:</label>
@@ -60,8 +65,8 @@
             </div>
 
         </form>
-        <form action="/films/addFiles" method="post" enctype="multipart/form-data">
-            <input class="btn btn-sm btn-primary" type="file" name="avatar" />
+        <form name="addFile" id="addFile"action="/films/addFiles" method="post" enctype="multipart/form-data">
+            <input class="btn btn-sm btn-primary" type="file" name="avatar" id="avatar" />
             <button class="btn btn-sm btn-primary" type="submit">Send to DB!</button>
         </form>
 

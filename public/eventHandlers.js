@@ -1,6 +1,4 @@
 
-
-// сброс значений формы
 $("#reset").click(function (e) {
     e.preventDefault();
     reset();
@@ -24,21 +22,43 @@ $("#findByName").click(function () {
     GetFilmByName(searchName);
 })
 
-// отправка формы
+
 $("#sendForm").submit(function (e) {
     e.preventDefault();
     var id = this.elements["id"].value;
     var name = this.elements["name"].value;
-    var yearRelease = this.elements["yearRelease"].value;
-    var encodingFormat = this.elements["encodingFormat"].value;
+    var yearRelease = +this.elements["yearRelease"].value;
+    var encodingFormat = this.elements["encodingFormat"].value; console.log(encodingFormat);
     var actorList = this.elements["actorList"].value;
     if (id == 0 && name && yearRelease && encodingFormat && actorList)
         CreateFilm(name, yearRelease, encodingFormat, actorList);
     else
         EditFilm(id, name, yearRelease, encodingFormat, actorList);
+
+    $(".error").remove();
+
+    if (name.length< 1) {
+      $('#sendForm input[name=name]').after('<span class="error">This field is required!</span>');
+    }
+
+    if (actorList.length< 1) {
+        $('#sendForm input[name=actorList]').after('<span class="error">This field is required!</span>');
+    }
+    if(encodingFormat === "default"){
+        $('#sendForm select[name=encodingFormat]').after('<span class="error">This field is required!</span>');
+    }
+
+    if (yearRelease < 1885 || yearRelease > new Date().getFullYear() || isNaN(yearRelease)) {
+        $('#sendForm input[name=yearRelease]').after('<span class="error">This field must be 1885.. to now!</span>');
+    }
+    var regEx =  /^((\w){1,}\s(\w){1,})(,\s?(\w){1,}\s(\w){1,}){0,}$/g;
+    var valid = regEx.test(actorList);
+    if (!valid) {
+        $('#sendForm input[name=actorList]').after('<span class="error">Actors must have name and surname! </span>');
+    }
+
 });
 
-// нажимаем на ссылку Изменить
 $("body").on("click", ".editLink", function () {
     var id = $(this).data("id");
     GetFilm(id);
@@ -46,42 +66,18 @@ $("body").on("click", ".editLink", function () {
 
 $("body").on("click", ".removeLink", function () {
     var id = $(this).data("id");
-    DeleteFilm(id);
+    var delСonfirmation = confirm(`Do you want delete film?`);
+    if(delСonfirmation)DeleteFilm(id);
 })
 
 
+    $("#addFile").submit(function (e) {
+        e.preventDefault()
+        var file = $('#avatar').prop('files')[0];
+        var formdata = new FormData();
+        formdata.append("avatar", file);
+        SendFile(formdata);
 
-
-
-$("#uploadFile").on("click", function(){
-    alert('ok');
-    event.stopPropagation(); // остановка всех текущих JS событий
-	event.preventDefault();  // остановка дефолтного события для текущего элемента - клик для <a> тега
-
-	// ничего не делаем если files пустой
-	if( typeof files == 'undefined' ) return;
-
-	// создадим объект данных формы
-	var data = new FormData();
-
-	// заполняем объект данных файлами в подходящем для отправки формате
-	
-        data.append( "key" ,files[0] );
-    
-    
-
-	// добавим переменную для идентификации запроса
-	data.append( 'my_file_upload', 1 );
-
-    SendFile(data);
-
-
-
-});
-    
-
-
-
-	
+})
 
 

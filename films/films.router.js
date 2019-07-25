@@ -3,6 +3,8 @@ const route = express.Router();
 const filmController = require('./films.controller')
 const multer = require('multer')
 const upload = multer({ dest: 'parser/' });
+const nodeValidator = require('node-validator');
+const validData = require('./film.validator');
 
 route.delete('/:id', filmController.removeFilmById);
 
@@ -14,7 +16,7 @@ route.get('/actors/:actor', filmController.getFilmsByActor);
 
 route.get('/', filmController.getFilmSort);
 
-route.post('/', filmController.createFilmInfo);
+route.post('/',nodeValidator.express(validData), filmController.createFilmInfo);
 
 route.put('/', filmController.updateFilm);
 

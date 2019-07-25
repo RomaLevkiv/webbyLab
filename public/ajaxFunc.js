@@ -33,7 +33,7 @@ function GetFilm(id) {
 
 function GetFilmByName(title) {
     $.ajax({
-        url: "/films/title/" + title,
+        url: "/films/title/" + encodeURIComponent(title),
         type: "GET",
         contentType: "application/json",
         success: function (films) {
@@ -49,7 +49,7 @@ function GetFilmByName(title) {
 
 function GetFilmByActor(actor) {
     $.ajax({
-        url: "/films/actors/" + actor,
+        url: "/films/actors/" + encodeURIComponent(actor),
         type: "GET",
         contentType: "application/json",
         success: function (films) {
@@ -77,6 +77,10 @@ function CreateFilm(filmName, filmRelease, filmFormat, filmStars) {
         success: function (film) {
             reset();
             $("table tbody").append(row(film));
+            if(film.name) {
+                alert(`Film "${film.name}" has added to Data Base`)
+            };
+            GetFilms();
         }
     })
 }
@@ -114,11 +118,31 @@ function DeleteFilm(id) {
         contentType: "application/json",
         method: "DELETE",
         success: function (film) {
-            console.log(film);
             $("tr[data-rowid='" + film._id + "']").remove();
+            
         }
     })
 }
+
+function SendFile(formdata) {
+    $.ajax({
+                url:"/films/addFiles",
+                type: "post",
+                data: formdata,
+                processData: false,
+                contentType: false,
+                success: function(e){
+                    alert(e);
+                },
+                error: function(e){
+                    console.log(e);
+                    alert(e.responseText)
+                },             
+                crossDomain:true
+           })
+    
+};
+
 
 var row = function (film) {
     return "<tr data-rowid='" + film._id + "'><td>" + film.name + "</td>" +

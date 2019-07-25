@@ -12,7 +12,8 @@ const filmSchema = new Schema({
   },
   encodingFormat: {
     type: String,
-    required: true
+    required: true,
+    enum: ['VHS', 'DVD', 'Blu-Ray']
   },
   actorList: {
     type: [String],

@@ -56,7 +56,7 @@ class Application {
   }
 }
 
-if (require.main === module) { // if module was called directly
+if (require.main === module) {
   return new Application().init();
 } else {
   module.exports = new Application();
